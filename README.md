@@ -1,7 +1,6 @@
-![Jive SDK - Java w/SpringBoot](/sdk-logo.png)
+<img align="right" src="https://github.com/jivesoftware/jive-sdk-java-springboot/blob/master/sdk-logo.png?raw=true" width="128">
 
-This is an implementation of the Jive SDK using Java w/SpringBoot.
-
+This is an implementation of the Jive SDK using Java w/SpringBoot.  For questions about this project, please visit the [Jive Developer Community](https://community.jivesoftware.com/community/developer)
 
 #### Pre-Requisites
 
