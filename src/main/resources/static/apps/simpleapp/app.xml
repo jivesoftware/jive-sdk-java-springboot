@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module specificationVersion="1">
+  <ModulePrefs title="Java+SpringBoot Example App"
+               description="Jive Developer App Contributions for Java + Springboot Example"
+               author="Jive Developers"
+               author_affiliation="Jive Software (Open Source)"
+               author_email="jivedev@jivesoftware.com">
+
+   <!-- Commonly used features -->
+   <Require feature="dynamic-height" />
+   <Require feature="jive-core-v2" />
+   <Require feature="jquery-1.6" />
+   <Require feature="osapi"/>
+   <Require feature="settitle"/>
+   <Require feature="views" />
+   <Require feature="jive-core-v3" />
+   <Require feature="embedded-experiences" />
+	  <Require feature="actions">
+		    <Param name="action-contributions">
+   			<![CDATA[
+           <!--
+           #### UNCOMMENT THIS TO HIDE THE APP FROM THE APPS MENU IN THE NAV BAR ####
+           <action id="example.app.launcherlessapp"
+                   path="jive/apps/launcher?filter=false()"/>
+           -->
+  
+   			]]>
+		</Param>
+	</Require>
+
+   <!-- Icons: 3 sizes, 16x16, 48x48, 128x128 -->
+   <Link rel="Icon"       href="images/icon16.png" />
+   <Link rel="MediumIcon" href="images/icon48.png" />
+   <Link rel="LargeIcon"  href="images/icon128.png" />
+
+   <!-- Preloaded Content: http://wiki.opensocial.org/index.php?title=Remote_Data_Requests_%28v0.9%29#Preloading_data -->
+   <!--
+   <Preload href="http://www.example.com" />
+   -->
+
+ </ModulePrefs>
+
+ <Content type="html"
+          view="home,canvas,ext-object,place-all-tab,place-space-tab,place-group-tab,place-project-tab,actions-tab,profile-tab,rte-action,content-action-all,content-action-document,content-action-discussion,content-action-question,content-action-document-binary,content-action-blogpost,content-action-poll,content-action-video,content-action-idea,content-action-event,createmenu-action,place-all-action,place-space-action,place-group-action,place-project-action,place-settings-all-action,place-settings-space-action,place-settings-group-action,place-settings-project-action"
+          href="canvas.html"
+          preferred_height="800" />
+
+</Module>

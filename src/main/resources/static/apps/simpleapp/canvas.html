@@ -1,0 +1,54 @@
+<html>
+<head>
+    <link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/coreapi-context-resolver-v3.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/main.js"></script>
+</head>
+
+<body>
+
+  <div id="debug-wrapper">
+      <h1>Want to see how to get you add-on experience to show up here?</h1>
+      <p>
+        Check out the <a href="https://community.jivesoftware.com/docs/DOC-114464">App Action Contribution Reference</a> in the <a href="https://community.jivesoftware.com/community/developer">Jive Developer Community</a>.
+      </p>
+      <p>
+        To build this add-on for yourself, simply:
+        <ul>
+          <li><a href="https://community.jivesoftware.com/docs/DOC-99887">Download the Jive Node SDK</a></li>
+          <li>Run the following command: <strong><a href="https://community.jivesoftware.com/docs/DOC-114554">jive-sdk create app</a></strong></li>
+          <li><a href="https://community.jivesoftware.com/docs/DOC-112407">Deploy your Add-On</a> to Jive.<br/>
+              <span style="padding-left: 8px;"><em>Note: <a href="https://community.jivesoftware.com/community/developer/blog/2015/09/15/ngrok-hyperspeed-simple-stream-app-integration-iterations">ngrok</a> - Is a very powerful tool for doing development in the cloud.</span></li>
+        </ul>
+      </p>
+      <p></p>
+      <hr/>
+      <div style="clear: both;"></div>
+      <div id="embed-actions" align="center" style="display: none">
+          <br/>
+          <a id="btnEmbedApp" class="embed-action" href="javascript:void(0);">Embed App (Simple)</a>
+          <a id="btnEmbedAppProg" class="embed-action" href="javascript:void(0);">Embed App (Programmatic)</a>
+          <a id="btnEmbedMarkup" class="embed-action" href="javascript:void(0);">Embed Markup</a>
+          <br/><br/>
+          <hr/>
+      </div>
+      <p></p>
+      <h2>Who Am I?</h2>
+      <div id="currentUser"></div>
+      <hr/>
+      <h2>Where Am I?</h2>
+      <span class="paramsContextLbl"><strong>Params Context:</strong>&nbsp;&nbsp;</span>
+      <a id="paramsSampleLink" href="javascript:void(0);">Get Sample Params</a>
+      <div id="paramsContext"></div>
+      <p></p>
+      <span class="actionContext"><strong>Action Context</strong>&nbsp;&nbsp;</span>
+      <span class="viewContext"><strong>View Context</strong>&nbsp;&nbsp;</span>
+      <br/><br/>
+      <div id="currentActionContext" class="actionContext"></div>
+      <div id="currentViewContext" class="viewContext"></div>
+  </div>
+
+</body>
+
+</html>

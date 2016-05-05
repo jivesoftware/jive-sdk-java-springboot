@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+  	<div th:fragment="page-header">
+  		<title>TODO:</title>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  		<link href="/resources/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  		<link href="/resources/stylesheets/main.css" rel="stylesheet" type="text/css" />
+  	</div>  
+    <!-- #### -->
+   	<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="nav-header"> 
+		 <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Static header</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+     </div>
+  	<!-- #### -->
+    <div th:fragment="footer">
+      &copy; 2016 Footer
+    </div>
+    <!-- #### -->
+    <div th:fragment="footer-admin">
+      &copy; 2016 Admin Footer
+    </div>
+  </body>
+</html>

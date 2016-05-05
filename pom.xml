@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.jivesoftware.sdk</groupId>
+	<artifactId>jive-sdk-java-springboot</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>jive-sdk-java-springboot</name>
+	<description>Example Jive SDK using Java and SpringBoot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.3.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<swagger.locations>com.jivesoftware.addon.example.services</swagger.locations>
+		<swagger.host>yourhost.ngrok.io</swagger.host>
+		<swagger.basePath>/</swagger.basePath>
+		<base.generated.docs.dir>${project.basedir}/generated</base.generated.docs.dir>
+		<generated.swagger.directory>${base.generated.docs.dir}/swagger-json</generated.swagger.directory>
+		<generated.markdown.directory>${project.basedir}/src/main/markdown/generated</generated.markdown.directory>
+		<markdown.input.directory>${project.basedir}/src/main/markdown</markdown.input.directory>
+		<!--  ###### -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		
+		
+		<!-- #### SWAGGER DOCUMENTATION #### -->
+		<swagger.title>Jive SDK - Java (SpringBoot)</swagger.title>
+		<swagger.version>v1</swagger.version>
+		<swagger.description>This is a sample for swagger-maven-plugin for Jive Developers (pom)</swagger.description>
+		<swagger.termsOfService>https://github.com/jivesoftware/jive-sdk-java-springboot</swagger.termsOfService>
+		<swagger.contact.email>jivedev@jivesoftware.com</swagger.contact.email>
+		<swagger.contact.name>Jive Developers</swagger.contact.name>
+		<swagger.contact.url>${swagger.termsOfService}</swagger.contact.url>
+		<swagger.license.name>Apache 2.0</swagger.license.name>
+		<swagger.license.url>http://www.apache.org/licenses/LICENSE-2.0.html</swagger.license.url>
+	</properties>
+
+	<dependencies>
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-rest</artifactId> 
+			</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+        <!-- JPA -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.0-801.jdbc4</version>
+		</dependency>
+ <!--  
+ 		<dependency>
+  			<groupId>org.hsqldb</groupId>
+  			<artifactId>hsqldb</artifactId> 
+			<scope>runtime</scope>
+		</dependency> 
+-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>angularjs</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ca.juliusdavies</groupId>
+			<artifactId>not-yet-commons-ssl</artifactId>
+			<version>0.3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+       <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>3.1.3</version>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<springmvc>false</springmvc>
+							<locations>${swagger.locations}</locations>
+							<schemes>http,https</schemes>
+							<host>${swagger.host}</host>
+							<basePath>$swagger.basePath}</basePath>
+							<info>
+								<title>${swagger.title}</title>
+								<version>${swagger.version}</version>
+								<description>${swagger.description}</description>
+								<termsOfService>${swagger.termsOfService}</termsOfService>
+								<contact>
+									<email>${swagger.contact.email}</email>
+									<name>${swagger.contact.name}</name>
+									<url>${swagger.contact.url}</url>
+								</contact>
+								<license>
+									<url>${swagger.license.url}</url>
+									<name>${swagger.license.name}</name>
+								</license>
+							</info>
+							<swaggerDirectory>${generated.swagger.directory}</swaggerDirectory>
+							<templatePath>${markdown.input.directory}/templates/index.md.hbs</templatePath>
+							<outputPath>${generated.markdown.directory}/index.html.md</outputPath>
+						</apiSource>
+					</apiSources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
