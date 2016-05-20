@@ -1,6 +1,8 @@
 package com.jivesoftware.sdk.dao.entity;
 
-public class OAuthCredentials {
+import com.jivesoftware.sdk.client.JiveAuthorizationSupport;
+
+public class OAuthCredentials implements JiveAuthorizationSupport {
 	
     private String url;
 
@@ -19,6 +21,12 @@ public class OAuthCredentials {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
+
+	@Override
+	public String getAuthorizationHeader() {
+		return String.format("Bearer %1$s", getAccessToken());
+	} // end getAuthorizationHeader
+    
     
     public String getUrl() {
         return url;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jivesoftware.sdk.dao.TileInstanceDAO;
+import com.jivesoftware.sdk.dao.TileInstanceRepository;
 import com.jivesoftware.sdk.dao.entity.TileInstance;
 
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +24,7 @@ public class JiveTileController {
 	private static final Logger logger = Logger.getLogger(JiveTileController.class.getName());
 
 	@Autowired
-	private TileInstanceDAO tileInstanceDAO;	
+	private TileInstanceRepository tileInstanceDAO;	
 		
 	@ApiOperation( 
 	    value = "TODO: Value", 

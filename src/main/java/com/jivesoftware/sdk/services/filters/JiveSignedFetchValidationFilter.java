@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -27,7 +26,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import com.jivesoftware.sdk.dao.JiveInstanceDAO;
+import com.jivesoftware.sdk.dao.JiveInstanceRepository;
 import com.jivesoftware.sdk.dao.entity.JiveInstance;
 import com.jivesoftware.sdk.util.JiveSDKUtils;
 
@@ -49,9 +48,9 @@ public class JiveSignedFetchValidationFilter implements Filter {
 
     private static final String QUERY_PARAM_SIGNATURE = "&" + PARAM_SIGNATURE + "=";
 
-	private JiveInstanceDAO jiveInstanceDAO;
+	private JiveInstanceRepository jiveInstanceDAO;
 	
-	public JiveSignedFetchValidationFilter(JiveInstanceDAO jiveInstanceDAO) {
+	public JiveSignedFetchValidationFilter(JiveInstanceRepository jiveInstanceDAO) {
 		this.jiveInstanceDAO = jiveInstanceDAO;
 	} // end constructor
 	

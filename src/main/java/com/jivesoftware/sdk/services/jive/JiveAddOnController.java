@@ -3,17 +3,21 @@ package com.jivesoftware.sdk.services.jive;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jivesoftware.sdk.dao.JiveInstanceDAO;
+import com.jivesoftware.sdk.dao.JiveInstanceRepository;
 import com.jivesoftware.sdk.dao.entity.JiveInstance;
-import com.jivesoftware.sdk.util.JiveSignatureValidator;
+import com.jivesoftware.sdk.dao.entity.validator.JiveSignatureValidator;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -28,7 +32,12 @@ public class JiveAddOnController {
 	private JiveSignatureValidator validator;
 	
 	@Autowired
-	private JiveInstanceDAO jiveInstanceDAO;	
+	private JiveInstanceRepository jiveInstanceDAO;	
+	
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(validator);
+    }
 
 	@ApiOperation( 
 	    value = "TODO: Value", 
@@ -40,7 +49,7 @@ public class JiveAddOnController {
 	@RequestMapping(
 		method={RequestMethod.POST},value="/register"
 	)
-	public ResponseEntity<HttpStatus> register(@RequestBody JiveInstance jiveInstance) {
+	public ResponseEntity<HttpStatus> register(@RequestBody @Valid JiveInstance jiveInstance) {
 		logger.log(Level.FINE,"/jive/addon/register called...");
 		if (validator.isValidSignature(jiveInstance)) {
 			saveInstance(jiveInstance);

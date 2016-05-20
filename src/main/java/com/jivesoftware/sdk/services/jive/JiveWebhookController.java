@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jivesoftware.sdk.dao.WebhookInstanceDAO;
+import com.jivesoftware.sdk.dao.WebhookInstanceRepository;
 
 @RestController
 @RequestMapping("/jive/webhook")
@@ -14,7 +14,7 @@ public class JiveWebhookController {
 	private static final Logger logger = Logger.getLogger(JiveWebhookController.class.getName());
 
 	@Autowired
-	private WebhookInstanceDAO webhookInstanceDAO;	
+	private WebhookInstanceRepository webhookInstanceDAO;	
 
 //	
 //	private void saveInstance(WebhookInstance webhook) {

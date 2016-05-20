@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class JiveSDKUtils {
     private static final Logger log = LoggerFactory.getLogger(JiveSDKUtils.class);
-
+    
     public static String encodeUrl(String url) {
         try {
             return URLEncoder.encode(url, "UTF-8");

@@ -154,4 +154,14 @@ public class TileInstance {
 	public String getGlobalTileInstanceId() {
 		return globalTileInstanceId;
 	}
+
+	public OAuthCredentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(OAuthCredentials credentials) {
+		this.credentials = credentials;
+	}
+	
+	
 } // end class

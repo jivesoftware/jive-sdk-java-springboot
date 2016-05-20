@@ -1,4 +1,4 @@
-package com.jivesoftware.sdk.util;
+package com.jivesoftware.sdk.dao.entity.validator;
 
 import java.util.Map;
 import java.util.SortedMap;
@@ -18,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import com.jivesoftware.sdk.dao.entity.JiveInstance;
 
@@ -27,7 +29,7 @@ import jersey.repackaged.com.google.common.collect.Maps;
  * Created by rrutan on 1/30/14.
  */
 @Component
-public class JiveSignatureValidator {
+public class JiveSignatureValidator implements Validator {
 	private static final Logger log = Logger.getLogger(JiveSignatureValidator.class.getName());
 
     @Value("${jive.developmentMode}")
@@ -35,6 +37,19 @@ public class JiveSignatureValidator {
     
     @Value("${jive.ignoreSignatureValidation}")
     private boolean ignoreSignatureValidation;
+    
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return JiveInstance.class.isAssignableFrom(clazz);
+	} // end supports
+
+	@Override
+	public void validate(Object target, Errors errors) {
+		JiveInstance jiveInstance = (JiveInstance)target;
+		if (!isValidSignature(jiveInstance)) {
+			errors.rejectValue("jiveSignature", "jiveInstance.jiveSignature.invalid", "Invalid jiveSignature");
+		} // end if
+	} // end validate
     
     private Client client = null;
 

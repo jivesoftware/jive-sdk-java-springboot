@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.jivesoftware.sdk.dao.entity.TileInstance;
 
-public interface TileInstanceDAO extends CrudRepository<TileInstance, Long> {
+public interface TileInstanceRepository extends CrudRepository<TileInstance, Long> {
 
 	@Query("SELECT ti FROM TileInstance ti WHERE globalTileInstanceId=:globalTileInstanceId")
     TileInstance findByGlobalTileInstanceId(@Param("globalTileInstanceId") String globalTileInstanceId);

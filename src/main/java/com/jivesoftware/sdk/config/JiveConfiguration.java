@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.jivesoftware.sdk.dao.JiveInstanceDAO;
+import com.jivesoftware.sdk.dao.JiveInstanceRepository;
 import com.jivesoftware.sdk.services.filters.JiveSignedFetchValidationFilter;
 
 @Configuration
@@ -26,7 +26,7 @@ import com.jivesoftware.sdk.services.filters.JiveSignedFetchValidationFilter;
 public class JiveConfiguration {
 	
 	@Autowired
-	private JiveInstanceDAO jiveInstanceDAO;
+	private JiveInstanceRepository jiveInstanceDAO;
 	
 	@Bean
 	public FilterRegistrationBean jiveSignedFetchValidationFilter() { 
