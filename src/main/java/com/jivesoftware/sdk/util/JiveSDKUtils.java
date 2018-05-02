@@ -17,9 +17,7 @@ public class JiveSDKUtils {
             return URLEncoder.encode(url, "UTF-8");
         }
         catch (UnsupportedEncodingException uee) {
-            //TODO: LOGGER
-            System.err.println("Failed encoding URL using UTF-8 charset" + uee.getMessage());
-            //noinspection deprecation
+            log.error("Failed encoding URL using UTF-8 charset {}", uee.getMessage(), uee);
             return url;
         }
     }
@@ -29,9 +27,7 @@ public class JiveSDKUtils {
             return URLDecoder.decode(url, "UTF-8");
         }
         catch (UnsupportedEncodingException uee) {
-            //TODO: LOGGER
-            System.err.println("Failed decoding URL using UTF-8 charset" + uee.getMessage());
-            //noinspection deprecation
+            log.error("Failed decoding URL using UTF-8 charset {}", uee.getMessage(), uee);
             return url;
         }
     }
@@ -78,7 +74,7 @@ public class JiveSDKUtils {
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         } catch (IOException ioe) {
             log.error("Unknown Error",ioe);
-        } // end try/catch
+        }
         return null;
     } // end getJson
 

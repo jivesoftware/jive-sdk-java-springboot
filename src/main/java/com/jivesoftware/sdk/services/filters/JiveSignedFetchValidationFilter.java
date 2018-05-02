@@ -6,8 +6,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -23,6 +21,8 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAuthorizedException;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -33,7 +33,7 @@ import com.jivesoftware.sdk.util.JiveSDKUtils;
 import jersey.repackaged.com.google.common.collect.Maps;
 
 public class JiveSignedFetchValidationFilter implements Filter {
-    private static final Logger logger = Logger.getLogger(JiveSignedFetchValidationFilter.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(JiveSignedFetchValidationFilter.class);
 	
 	public static final String ATTR_JIVE_INSTANCE = "jiveInstance";
 	
@@ -56,7 +56,7 @@ public class JiveSignedFetchValidationFilter implements Filter {
 	
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-    	logger.log(Level.FINE, "JiveSignedFetchValidationFilter processing...");
+    	logger.debug("JiveSignedFetchValidationFilter processing...");
 		try {
 			authenticate((HttpServletRequest)request);
 			chain.doFilter(request, response);
@@ -70,13 +70,13 @@ public class JiveSignedFetchValidationFilter implements Filter {
     
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		logger.log(Level.FINE, "JiveSignedFetchValidationFilter initializing...");
+		logger.debug("JiveSignedFetchValidationFilter initializing...");
     } // end init
 
 
     @Override
     public void destroy() {
-    	logger.log(Level.FINE, "JiveSignedFetchValidationFilter destroying...");
+    	logger.debug("JiveSignedFetchValidationFilter destroying...");
     } // end destroy
         
 
@@ -85,12 +85,12 @@ public class JiveSignedFetchValidationFilter implements Filter {
         String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authorization == null) {
-            logger.log(Level.INFO,"Jive authorization isn't defined: " + authorization);
+            logger.info("Jive authorization isn't defined: {}", authorization);
             throw new BadRequestException("Missing Jive Authorization Header");
         } // end if
         
         if (!authorization.startsWith(JIVE_EXTN) || !authorization.contains(QUERY_PARAM_SIGNATURE)) {
-            logger.log(Level.INFO,"Jive authorization isn't properly formatted: " + authorization);
+            logger.info("Jive authorization isn't properly formatted: {}", authorization);
             throw new BadRequestException("Jive Authorization Header is improperly formatted");
         } // end if
 
@@ -103,32 +103,27 @@ public class JiveSignedFetchValidationFilter implements Filter {
         String timeStampStr = paramMap.get(PARAM_TIMESTAMP);
 
         if (!JiveSDKUtils.isAllExist(algorithm, clientId, jiveUrl, tenantId, timeStampStr)) {
-            //TODO: LOG
-            System.err.println("Jive authorization is partial: " + paramMap);
+            logger.error("Jive authorization is partial: {}", paramMap);
             throw new BadRequestException("Jive Authorization Header is incomplete");
         } // end if
 
         long timeStamp = Long.parseLong(timeStampStr);
         long millisPassed = System.currentTimeMillis() - timeStamp;
         if (millisPassed < 0 || millisPassed > TimeUnit.MINUTES.toMillis(5)) {
-            //TODO: LOG
-            System.err.println("Jive authorization is rejected since it's " + millisPassed + "ms old (max. allowed is 5 minutes): " + paramMap);
+            logger.error("Jive authorization is rejected since it's {}ms old (max. allowed is 5 minutes): {}", millisPassed, paramMap);
             throw new NotAuthorizedException("Jive Authorization Header is expired");
         } // end if
 
        JiveInstance jiveInstance = getJiveInstanceByTenantId(tenantId);
        
         if (jiveInstance == null) {
-            //TODO: LOG
-            System.err.println("Jive authorization failed due to invalid tenant ID: " + tenantId);
+            logger.error("Jive authorization failed due to invalid tenant ID: {}", tenantId);
             throw new NotAuthorizedException("Unable to validate Jive Authorization Header : x001");
         } // end if
 
         String expectedClientId = jiveInstance.getClientId();
         if (!clientId.equals(expectedClientId)) {
-            String msg = String.format("Jive authorization failed due to missing Client ID: Actual [%s], Expected [%s]", clientId, expectedClientId);
-            //TODO: LOG
-            System.err.println(msg);
+            logger.error("Jive authorization failed due to missing Client ID: Actual [{}], Expected [{}]", clientId, expectedClientId);
             throw new NotAuthorizedException("Unable to validate Jive Authorization Header : x002");
         } // end if
 
@@ -140,13 +135,11 @@ public class JiveSignedFetchValidationFilter implements Filter {
             if (expectedSignature.equals(signature)) {
                 request.setAttribute(JiveSignedFetchValidationFilter.ATTR_JIVE_INSTANCE,jiveInstance);
             } else {
-                //TODO: LOG
-                System.err.println("Jive authorization failed due to tampered signature! Original authz: " + authorization);
+                logger.error("Jive authorization failed due to tampered signature! Original authz: {}", authorization);
                 throw new NotAuthorizedException("Unable to validate Jive Authorization Header : x003");
             } // end if
         } catch (Exception e) {
-            //TODO: LOG
-            System.err.println("Failed validating Jive auth. scheme"+e.getMessage());
+            logger.error("Failed validating Jive auth. scheme {}", e.getMessage(), e);
             throw new NotAuthorizedException("Unable to validate Jive Authorization Header : x004");
         } // end try/catch
 
@@ -182,12 +175,12 @@ public class JiveSignedFetchValidationFilter implements Filter {
     } // end getParamsFromAuthz
     
     private JiveInstance getJiveInstanceByTenantId(String tenantId) {
-    	logger.log(Level.FINE, "Getting Instance by TenantId["+tenantId+"]....");
+    	logger.debug("Getting Instance by TenantId[{}]....", tenantId);
     	JiveInstance result = jiveInstanceDAO.findByTenantId(tenantId);
     	if (result != null) {
     		return result;
     	} else {
-    		 logger.log(Level.INFO,"No JiveInstance found for tenantId["+tenantId+"]");
+    		 logger.info("No JiveInstance found for tenantId[{}]", tenantId);
     	} // end if
     	return null;
     } // end getJiveInstanceByTenantID
