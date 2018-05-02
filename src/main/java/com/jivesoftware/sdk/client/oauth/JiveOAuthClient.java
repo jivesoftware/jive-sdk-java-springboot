@@ -133,8 +133,9 @@ public class JiveOAuthClient extends BaseJiveClient {
         //TODO:  IMPLEMENT FUTURES
         JiveOAuthResponse response = target.request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED),JiveOAuthResponse.class);
 
-        if (log.isDebugEnabled()) { log.debug("Access Token : Response : "+response); }
-        System.out.println(response);
+        if (log.isDebugEnabled()) {
+            log.debug("Access Token : Response : " + response);
+        }
 
         OAuthCredentials credentials = new OAuthCredentials();
         credentials.setAccessToken(response.getAccessToken());
